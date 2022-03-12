@@ -1,0 +1,21 @@
+.video {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.view {
+    max-height: 90vh;
+}
+
+.container {
+    margin: 1rem 2rem;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.description {
+    font-size: 1rem;
+}

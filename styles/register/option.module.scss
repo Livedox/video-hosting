@@ -1,0 +1,26 @@
+.option {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.527);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    overflow: auto;
+    &_active {
+        display: flex;
+    }
+}
+
+.container {
+    min-width: 25%;
+    margin: 5% 0;
+}
+
+.register {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 2rem;
+}

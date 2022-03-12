@@ -1,0 +1,64 @@
+@import "./vars.scss";
+
+.header {
+    width: 100%;
+    height: 50px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.507);
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+}
+
+.register {
+    font-size: 1.25rem;
+    margin: 0 0.5rem;
+}
+
+.title {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.25rem;
+    margin: 0 0.5rem;
+}
+
+.container {
+    display: flex;
+}
+
+.errors {
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+}
+
+.error {
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    background-color: $red;
+    border: 2px solid $darkred;
+    color: $white;
+    user-select: none;
+    position: relative;
+}
+
+.error::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: $darkred;
+    width: 0;
+    animation: increaseWidth 5s;
+}
+
+@keyframes increaseWidth {
+    0% {width: 0;}
+    100% {width: 100%;}
+}
