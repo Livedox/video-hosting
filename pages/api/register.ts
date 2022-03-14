@@ -3,7 +3,7 @@ import connectDB from "../../middleware/mongodb";
 import UserModel from "../../models/UserModel";
 import UserService from "../../service/user";
 import RegisterUserDto from "../../dto/RegisterUserDto";
-import cookie from "cookie";
+import cookie, { CookieSerializeOptions } from "cookie";
 
 const emailRegExp = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
 async function checkErrors(body: RegisterUserDto) {
@@ -47,21 +47,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 return;
             }
     
-            const user = await UserService.register(body);
-            res.setHeader("Set-Cookie", cookie.serialize("refreshToken", user.refreshToken, {
+            const cookieOptions: CookieSerializeOptions = {
                 httpOnly: true,
                 maxAge: 2_592_000_000,//30d
                 secure: true,
-                sameSite: "none",
                 path: "/"
-            }));
-            res.setHeader("Set-Cookie", cookie.serialize("accessToken", user.accessToken, {
-                httpOnly: true,
-                maxAge: 1_800_000,//30m
-                secure: true,
-                sameSite: "none",
-                path: "/"
-            }));
+            };
+            const user = await UserService.register(body);
+            res.setHeader("Set-Cookie", [cookie.serialize("refreshToken", user.refreshToken, cookieOptions),
+                cookie.serialize("accessToken", user.accessToken, cookieOptions)]);
             res.status(200).json(user);
             return;
         }

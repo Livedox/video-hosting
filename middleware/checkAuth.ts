@@ -7,10 +7,8 @@ function Auth(handler: (req: NextApiRequest, res: NextApiResponse, isAuth: boole
             let isAuth = true;
             const accessToken = req.cookies.accessToken;
             if(!accessToken) isAuth = false;
-            console.log(accessToken);
             const userData = await TokenService.validateAccessToken(`${accessToken}`);
             if(!userData) isAuth = false;
-            console.log(userData);
             return handler(req, res, isAuth);
         } catch (e) {
             throw new Error("Error Auth");

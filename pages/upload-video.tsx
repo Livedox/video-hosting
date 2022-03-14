@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import checkAuth from "../client-server/chechAuth";
 import Header from "../components/layout/Header";
 import config from "../config";
 
@@ -17,7 +18,7 @@ function uploadVideo() {
         xhr.send(data);
     }
     return(
-        <Header>
+        <Header isAuth={true}>
             <div>
                 <form method="POST" onSubmit={upload}>
                     <input type="text" name="titleVideo" />
@@ -29,17 +30,9 @@ function uploadVideo() {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const res = await fetch(`${config.server}/api/check-authorization`);
-    const data = await res.json();
-
-
-    if(data.type !== "ok") return {
-        redirect: {
-            destination: `${config.server}`,
-            permanent: false,
-        },
-    }
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const result = await checkAuth(ctx);
+    if(result) return result;
 
     return {props: {user: "Bob"}};
 }

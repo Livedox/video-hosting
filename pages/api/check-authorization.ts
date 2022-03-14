@@ -4,7 +4,6 @@ import checkAuth from "../../middleware/checkAuth";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse, isAuth: boolean) => {
     try {
-        console.log(req.body);
         if (isAuth) {
             res.status(200).json({type: "ok"});
         } else {
