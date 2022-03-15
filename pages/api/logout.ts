@@ -1,19 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import UserService from "../../service/user";
-import cookie from "cookie";
+import cookie, { CookieSerializeOptions } from "cookie";
 import connectDB from "../../middleware/mongodb";
+import config from "../../config";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         if (req.method === "POST") {
             const {refreshToken} = req.cookies;
-            const token = await UserService.logout(refreshToken);
-            res.setHeader("Set-Cookie", cookie.serialize("refreshToken", "", {
+            await UserService.logout(refreshToken);
+            const cookieOptions: CookieSerializeOptions = {
                 httpOnly: true,
-                maxAge: 0//0
-            }));
-
-            res.status(200);
+                maxAge: 0,
+                secure: true,
+                path: "/"
+            };
+            res.setHeader("Set-Cookie", [cookie.serialize("refreshToken", "", cookieOptions),
+                cookie.serialize("accessToken", "", cookieOptions)]).status(301).redirect(`/`).end();
             return;
         }
         

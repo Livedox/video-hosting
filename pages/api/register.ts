@@ -55,7 +55,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             };
             const user = await UserService.register(body);
             res.setHeader("Set-Cookie", [cookie.serialize("refreshToken", user.refreshToken, cookieOptions),
-                cookie.serialize("accessToken", user.accessToken, cookieOptions)]);
+                cookie.serialize("accessToken", user.accessToken, {...cookieOptions, maxAge:1_800_000})]);
             res.status(200).json(user);
             return;
         }

@@ -31,8 +31,12 @@ function uploadVideo() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const result = await checkAuth(ctx);
-    if(result) return result;
+    if((!await checkAuth(ctx))) return {
+        redirect: {
+            destination: `${config.server}`,
+            permanent: false,
+        },
+    }
 
     return {props: {user: "Bob"}};
 }

@@ -7,7 +7,7 @@ import {v4} from "uuid";
 import TokenService from "./token";
 import config from "../config";
 import LoginUserDto from "../dto/LoginUserDto";
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 
 
 class UserService {
@@ -22,7 +22,12 @@ class UserService {
             isEmailVerified: false,
             registrationDate: new Date()
         });
-        await sendActivationMail(user.email, verificationLink);
+        try {
+            await sendActivationMail(user.email, verificationLink);
+        } catch(e) {
+            console.error("mail token expired");
+        }
+        
         const userDto = new UserDto(user._id, user.email, user.login, user.registrationDate);
         const tokens = TokenService.generateToken({...userDto});
         await TokenService.saveToken(user._id, tokens.refreshToken);
@@ -56,13 +61,13 @@ class UserService {
 
     async refresh(refreshToken: string) {
         if(!refreshToken) {
-            throw new Error("Unaufthorized Error");
+            return undefined;
         }
 
         const userData = await TokenService.validateRefreshToken(refreshToken);
         const tokenFromDb = await TokenService.findToken(refreshToken);
         if(!userData || !tokenFromDb) {
-            throw new Error("Unaufthorized Error");
+            return undefined;
         }
 
         const user = (await UserModel.findById(tokenFromDb.userId))!;

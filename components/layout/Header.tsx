@@ -5,6 +5,8 @@ import getId from "../../getId";
 import useToggle from "../../hooks/useToggle";
 import styles from "../../styles/header.module.scss";
 import Register from "../register/Register";
+import Router from "next/router";
+
 
 type Props = {
     children: ReactElement,
@@ -33,6 +35,11 @@ function Header({children, isAuth}: Props) {
         
     }
 
+    const logout = async () => {
+        await fetch("/api/logout", { method: "POST" });
+        Router.push("/");
+    }
+
     return(
         <>
         <header className={styles.header}>
@@ -45,7 +52,7 @@ function Header({children, isAuth}: Props) {
             <div className={styles.container}>
                 {isAuth ? 
                 <>
-                    <button className={styles.button}>Sign out</button>
+                    <button className={styles.button} onClick={logout}>Sign out</button>
                     <Link href={`/upload-video`}>
                     <a className={styles.button}>
                         <svg className={styles.uploadIcon} x="0px" y="0px" viewBox="0 0 374.116 374.116">

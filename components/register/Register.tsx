@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "../../styles/register/register.module.scss";
 import RegisterLayout from "./RegisterLayout";
+import Router from "next/router";
+
 
 interface Props {
     isRegister: boolean;
@@ -33,7 +35,10 @@ function Register({isRegister, toggleRegister, setErrors}: Props) {
         const json: Response = await res.json();
         if(json.errors) {
             setErrors(json.errors);
+            return;
         }
+        Router.push("/");
+        toggleRegister();
     }
 
     return(

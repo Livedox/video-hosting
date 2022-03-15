@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const auth = await checkAuth(ctx);
     const data = {
         videos,
-        isAuth: !auth,
+        isAuth: auth,
     }; 
 
     return { props: { data } }
