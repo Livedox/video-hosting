@@ -12,6 +12,7 @@ function uploadVideo() {
         const data = new FormData();
         data.append("file", file);
         data.append("title", form.titleVideo.value);
+        data.append("description", form.description.value);
         const xhr = new XMLHttpRequest();
         xhr.overrideMimeType("video/*");
         xhr.open("POST", "/api/video/add", true);
@@ -22,6 +23,7 @@ function uploadVideo() {
             <div>
                 <form method="POST" onSubmit={upload}>
                     <input type="text" name="titleVideo" />
+                    <input type="description" name="description" />
                     <input type="file" name="video" accept="video/*" />
                     <input type="submit" />
                 </form>

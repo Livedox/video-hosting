@@ -4,14 +4,16 @@ import mongoose, {Schema, Model} from "mongoose";
 export type Video = {
     userId: ObjectId,
     title: string,
-    registrationDate: Date,
-    url: string
+    creationDate: Date,
+    url: string,
+    description: string,
 }
 
 const VideoSchema = new Schema<Video>({
     userId: {type: Schema.Types.ObjectId, ref: "User"},
     title: {type: String, required: true},
-    registrationDate: {type: Date, default: new Date()},
+    creationDate: {type: Date, default: new Date()},
+    description: {type: String, required: true, default: ""},
     url: {type: String, required: true}
 }, {collection: "videos"});
 const VideoModel: Model<Video, {}, {}, {}> = mongoose.models.Video || mongoose.model("Video", VideoSchema);

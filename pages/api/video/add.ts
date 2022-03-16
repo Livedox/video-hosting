@@ -4,6 +4,7 @@ import fs from "fs";
 import { v4 } from "uuid";
 import VideoModel from "../../../models/VideoModel";
 import connectDB from "../../../middleware/mongodb";
+import jwt from "jsonwebtoken";
 
 export const config = {
     api: {
@@ -11,11 +12,12 @@ export const config = {
     }
 }
 
-async function uploadVideoStream(req: NextApiRequest, res: NextApiResponse) {
+async function uploadVideoStream(req: NextApiRequest, res: NextApiResponse, payload: jwt.JwtPayload) {
     const bb = busboy({headers: req.headers});
     const data = {
         title: "",
-        url: ""
+        url: "",
+        description: ""
     }
 
     bb.on("file", (_, file, info) => {
@@ -28,13 +30,16 @@ async function uploadVideoStream(req: NextApiRequest, res: NextApiResponse) {
 
     bb.on("field", (name, value, _) => {
         if(name === "title") data.title = value;
+        if(name === "description") data.description = value;
     });
 
     bb.on("close", async () => {
         await VideoModel.create({
-            title: data.title,
+            userId: payload.id,
             url: data.url,
-            registrationDate: new Date()
+            title: data.title,
+            description: data.description,
+            creationDate: new Date(),
         });
         res.writeHead(200, {Connection: "close"});
     });
@@ -46,9 +51,14 @@ async function uploadVideoStream(req: NextApiRequest, res: NextApiResponse) {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         if (req.method === "POST") {
-            await uploadVideoStream(req, res);
+            const payload = jwt.verify(req.cookies.accessToken, `${process.env.JWT_SECRET_ACCESS}`);
+            if(typeof payload === "string" || payload instanceof String) {
+                res.status(400).json({type: "error"});
+                return;
+            }
+            await uploadVideoStream(req, res, payload);
 
-            res.status(200).end();
+            res.status(200);
             return;
         }
         
