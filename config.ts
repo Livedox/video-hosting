@@ -1,6 +1,5 @@
-let path = !`${process.env.API_URL}` ? `${process.env.API_URL}` : "http://localhost:3000";
-
-console.log(path);
+const url = process.env.API_URL;
+let path = !!url ? url : "http://localhost:3000";
 
 const config = {
     server: path
