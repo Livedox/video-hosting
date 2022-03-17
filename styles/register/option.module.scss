@@ -1,3 +1,5 @@
+@import "../vars.scss";
+
 .option {
     position: fixed;
     display: none;
@@ -20,7 +22,7 @@
 }
 
 .register {
-    background-color: #fff;
+    background-color: $night;
     border-radius: 5px;
     padding: 2rem;
 }

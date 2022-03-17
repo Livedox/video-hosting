@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import UserService from "../../service/user";
 import cookie, { CookieSerializeOptions } from "cookie";
 import connectDB from "../../middleware/mongodb";
-import config from "../../config";
+
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -16,14 +16,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 path: "/"
             };
             res.setHeader("Set-Cookie", [cookie.serialize("refreshToken", "", cookieOptions),
-                cookie.serialize("accessToken", "", cookieOptions)]).status(301).redirect(`/`).end();
+                cookie.serialize("accessToken", "", cookieOptions)]).status(200).end();
             return;
         }
         
-        res.status(404);
+        res.status(404).end();
     } catch (e) {
         console.log(e);
-        res.status(500);
+        res.status(500).end();
     }
 }
 

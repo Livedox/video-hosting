@@ -6,6 +6,7 @@ import useToggle from "../../hooks/useToggle";
 import styles from "../../styles/header.module.scss";
 import Register from "../register/Register";
 import Router from "next/router";
+import Login from "../register/Login";
 
 
 type Props = {
@@ -20,6 +21,7 @@ type Error = {
 
 function Header({children, isAuth}: Props) {
     const [isRegister, toggleRegister] = useToggle();
+    const [isLogin, toggleLogin] = useToggle();
     const [errors, setErrors] = useState<Error[]>([]);
     
     const updateErrors = (newErrors: string[]) => {
@@ -44,7 +46,7 @@ function Header({children, isAuth}: Props) {
         <>
         <header className={styles.header}>
             <div>
-                <Link href={`${config.server}`}>
+                <Link href={`${config.server}/`}>
                     <a className={styles.title}>VideoHosting</a>
                 </Link>
             </div>
@@ -66,7 +68,7 @@ function Header({children, isAuth}: Props) {
                     </a></Link>
                 </> :
                 <>
-                    <button className={styles.button}>Log in</button>
+                    <button onClick={toggleLogin} className={styles.button}>Log in</button>
                     <button onClick={toggleRegister} className={styles.button}>Register</button>
                 </>}
             </div>
@@ -79,6 +81,7 @@ function Header({children, isAuth}: Props) {
             })}
         </div>
         <Register isRegister={isRegister} toggleRegister={toggleRegister} setErrors={updateErrors} />
+        <Login isLogin={isLogin} toggleLogin={toggleLogin} setErrors={updateErrors} />
         {children}
         </>
     );

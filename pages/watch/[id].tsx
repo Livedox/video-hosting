@@ -7,6 +7,8 @@ import { GetServerSideProps } from "next";
 import checkAuth from "../../client-server/chechAuth";
 import Header from "../../components/layout/Header";
 import styles from "../../styles/watch/index.module.scss";
+import { useEffect, useState } from "react";
+import { Comment } from "../../models/CommentModel";
 
 
 type Props = {
@@ -18,12 +20,23 @@ type Props = {
 }
 
 function watch({ data }: Props) {
+    const [comments, setComments] = useState<Comment[]>([]);
+
+    useEffect(() => {
+        fetch(`/api/comment/get/${data.id}`)
+            .then((res) => res.json())
+            .then((comments) => setComments(comments));
+    }, []);
+
+    const addComment = (comment: Comment) => {
+        setComments([...comments, comment]);
+    }
     return(
         <Header isAuth={data.isAuth}>
             <div className={styles.main}>
                 <VideoComponent src={data.video.url} title={data.video.title} description={data.video.description} />
-                <Input id={data.id} />
-                <Comments id={data.id} />
+                <Input id={data.id} addComment={addComment} />
+                <Comments comments={comments} />
             </div>
         </Header>
     );

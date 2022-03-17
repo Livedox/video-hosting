@@ -34,6 +34,10 @@ async function uploadVideoStream(req: NextApiRequest, res: NextApiResponse, payl
     });
 
     bb.on("close", async () => {
+        if(data.title.length < 1 || data.title.length > 50) {
+            res.status(200).json({type: "error"});
+            return;
+        }
         await VideoModel.create({
             userId: payload.id,
             url: data.url,
@@ -53,7 +57,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (req.method === "POST") {
             const payload = jwt.verify(req.cookies.accessToken, `${process.env.JWT_SECRET_ACCESS}`);
             if(typeof payload === "string" || payload instanceof String) {
-                res.status(400).json({type: "error"});
+                res.status(200).json({type: "error"});
                 return;
             }
             await uploadVideoStream(req, res, payload);

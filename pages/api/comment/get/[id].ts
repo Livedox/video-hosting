@@ -4,9 +4,9 @@ import connectDB from "../../../../middleware/mongodb";
 import CommentModel from "../../../../models/CommentModel";
 
 
-const handler = async (req: NextApiRequest, res: NextApiResponse, isAuth: boolean) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        if(isAuth && req.method === "GET") {
+        if(req.method === "GET") {
             const {id} = req.query;
             const data = await CommentModel.find({videoId: id});
 
@@ -21,4 +21,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, isAuth: boolea
     }
 }
 
-export default connectDB(checkAuth(handler));
+export default connectDB(handler);
