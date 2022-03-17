@@ -6,7 +6,7 @@ import config from "../config";
 import styles from "../styles/upload-video.module.scss";
 
 
-function uploadVideo() {
+function UploadVideo() {
     const [file, setFile] = useState<File>();
 
     const change = (e: React.ChangeEvent) => {
@@ -82,4 +82,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 
-export default uploadVideo;
+export default UploadVideo;

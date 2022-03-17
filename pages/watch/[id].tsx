@@ -19,7 +19,7 @@ type Props = {
     },
 }
 
-function watch({ data }: Props) {
+function Watch({ data }: Props) {
     const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {
@@ -57,4 +57,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return { props: { data } }
 }
 
-export default watch;
+export default Watch;
