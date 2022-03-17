@@ -13,7 +13,7 @@ const VideoSchema = new Schema<Video>({
     userId: {type: Schema.Types.ObjectId, ref: "User"},
     title: {type: String, required: true},
     creationDate: {type: Date, default: new Date()},
-    description: {type: String, required: true, default: ""},
+    description: {type: String, default: ""},
     url: {type: String, required: true}
 }, {collection: "videos"});
 const VideoModel: Model<Video, {}, {}, {}> = mongoose.models.Video || mongoose.model("Video", VideoSchema);

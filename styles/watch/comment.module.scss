@@ -1,0 +1,19 @@
+@import "../vars.scss";
+
+.comments {
+    margin: 0 1.5rem;
+}
+
+.comment {
+    margin: 1.5rem 0;
+}
+
+.comment__title {
+    font-size: 1.1rem;
+   margin-bottom: 0.3rem;
+   color: $silver;
+}
+
+.comment__message {
+    color: $darkgrey;
+}

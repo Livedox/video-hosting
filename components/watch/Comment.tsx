@@ -1,13 +1,15 @@
-export interface CommentType {
-    user: string;
-    message: string;
+import styles from "../../styles/watch/comment.module.scss";
+
+export type CommentType = {
+    user: string,
+    message: string,
 }
 
 function Comment({user, message}: CommentType) {
     return(
-        <div>
-            <h3>{user}</h3>
-            <p>{message}</p>
+        <div className={styles.comment}>
+            <h3 className={styles.comment__title}>{user}</h3>
+            <p className={styles.comment__message}>{message}</p>
         </div>
     );
 }

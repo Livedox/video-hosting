@@ -1,12 +1,13 @@
 import Comments from "../../components/watch/Comments";
 import Input from "../../components/watch/Input";
 import VideoComponent from "../../components/watch/Video";
-import comments from "../../comments";
 import config from "../../config";
 import { Video } from "../../models/VideoModel";
 import { GetServerSideProps } from "next";
 import checkAuth from "../../client-server/chechAuth";
 import Header from "../../components/layout/Header";
+import styles from "../../styles/watch/index.module.scss";
+
 
 type Props = {
     data: {
@@ -19,7 +20,7 @@ type Props = {
 function watch({ data }: Props) {
     return(
         <Header isAuth={data.isAuth}>
-            <div>
+            <div className={styles.main}>
                 <VideoComponent src={data.video.url} title={data.video.title} description={data.video.description} />
                 <Input id={data.id} />
                 <Comments id={data.id} />

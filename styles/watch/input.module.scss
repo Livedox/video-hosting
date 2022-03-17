@@ -1,0 +1,32 @@
+@import "../vars.scss";
+
+.container {
+    margin-top: 0.3rem;
+    display: none;
+    justify-content: flex-end;
+}
+
+.container_active {
+    display: flex;
+}
+
+.input {
+    width: 100%;
+    border-bottom: 1px solid $silver;
+    font-size: 1.25rem;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.cancel {
+    color: $grey;
+}
+
+.submit {
+    background-color: $blue;
+    border-radius: 3px;
+}

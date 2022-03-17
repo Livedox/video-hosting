@@ -1,21 +1,39 @@
+@import "../vars.scss";
+
 .video {
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
 
+.videoContainer {
+    width: 100%;
+    padding-top: 45%;
+    position: relative;
+}
+
 .view {
-    max-height: 90vh;
+    position: absolute;
+    top: 0;left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 100%;
+    background-color: black;
 }
 
 .container {
-    margin: 1rem 2rem;
+    margin: 1rem 0;
 }
 
 .title {
-    font-size: 2rem;
+    margin: 1rem 0;
+    padding-bottom: 0.5rem;
+    font-size: 2.25rem;
+    border-bottom: 1px solid $grey;
 }
 
 .description {
-    font-size: 1rem;
+    font-size: 1.25rem;
+    color: $silver;
+    margin: 1rem 0 2rem 3rem;
 }

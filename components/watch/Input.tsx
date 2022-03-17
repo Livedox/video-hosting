@@ -1,8 +1,14 @@
+import { useState } from "react";
+import useToggle from "../../hooks/useToggle";
+import styles from "../../styles/watch/input.module.scss";
+
 type Props = {
     id: string | string[] | undefined,
 }
 
 function Input({ id }: Props) {
+    const [isActive, setActive] = useState(false);
+
     const add = async (e: React.FormEvent) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -16,10 +22,15 @@ function Input({ id }: Props) {
         const json: Response = await res.json();
         console.log(json);
     }
+
+    const changeActive = (active: boolean) => () => setActive(active);
     return(
         <form method="POST" onSubmit={add}>
-            <input name="message" type="text" placeholder="Введите текст комментария" />
-            <input type="submit" />
+            <input onFocus={changeActive(true)} className={styles.input} name="message" type="text" placeholder="Enter comment text" />
+            <div className={`${styles.container} ${isActive ? styles.container_active : ""}`}>
+                <input type="button" value="Cancel" onClick={changeActive(false)} className={`${styles.cancel} ${styles.button}`} />
+                <input className={`${styles.submit} ${styles.button}`} type="submit" value="Submit comment" />
+            </div>
         </form>
     );
 }
