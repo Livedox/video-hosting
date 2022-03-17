@@ -20,6 +20,7 @@ function index({data}:Props) {
         <Header isAuth={data.isAuth}>
             <>
             <div className={styles.main}>
+                {!data.videos.length ? "Video upload on vercel don't work! Use local" : ""}
                 {data.videos.map((item) => {
                     const id = item._id.toString();
                     return <VideoComponent id={id} src={item.url} title={item.title} key={id} />

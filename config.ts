@@ -1,5 +1,4 @@
-let path = "http://localhost:3000";
-if (process.env.VERCEL_URL) path = "https://"+process.env.VERCEL_URL;
+let path = "https://video-hosting-lime.vercel.app";
 
 const config = {
     server: path
