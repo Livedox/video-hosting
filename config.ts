@@ -1,4 +1,4 @@
-const url = process.env.VERCEL_URL || process.env.API_URL;
+const url = process.env.API_URL || process.env.VERCEL_URL;
 let path = !!url ? url : "http://localhost:3000";
 
 const config = {
